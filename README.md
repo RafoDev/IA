@@ -15,5 +15,5 @@ Y al ejecutar .\hw se imprimirá un menú sencillo en la terminal.
 ![Image text](https://github.com/RafoDev/ia-search-algorithms/blob/master/examples/a-star-example.JPG)
 ### BFS
 ![Image text](https://github.com/RafoDev/ia-search-algorithms/blob/master/examples/bfs-example.JPG)
-### A-DFS
+### DFS
 ![Image text](https://github.com/RafoDev/ia-search-algorithms/blob/master/examples/dfs-example.JPG)
