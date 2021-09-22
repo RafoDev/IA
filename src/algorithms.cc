@@ -1,4 +1,4 @@
-#include "aStar.h"
+#include "algorithms.h"
 
 Pair movements[8]{
     {0, -1}, {0, 1}, {1, 0}, {-1, 0}, {-1, -1}, {1, 1}, {-1, 1}, {-1, -1}};
@@ -64,7 +64,7 @@ void updateIndex(Queue &q, int position)
     }
     q = newQ;
 }
-
+//-------------------------------------------------aStar-------------------------------------------------
 bool aStar(Pair src, Pair dest, Grid myGrid)
 {
     myGrid.paintGrid(src, 1);
@@ -152,4 +152,86 @@ bool aStar(Pair src, Pair dest, Grid myGrid)
         closedList.pop_back();
     }
     return true;
+}
+
+
+using namespace std;
+int dirx[8]={0,0,-1,1,1,-1,-1,1};
+int diry[8]={1,-1,0,0,1,-1,1,-1};
+//int mat[N][N];
+#include<list>
+//-------------------------------------------------bfs-------------------------------------------------
+
+int check_dir(int x, int y, Grid mat)
+{
+	if(x<0 || x>mat.GRID_SIZE-1 || y<0 || y>mat.GRID_SIZE-1 || mat.grid[x][y]!=0)
+		return false;
+	else
+		return true;
+}
+
+
+void bfs(int x1, int y1, int x2, int y2,Grid mat) {
+	// bool visited[N][N];
+    Grid visited;
+    visited.GRID_SIZE = mat.GRID_SIZE;
+    visited.buildGrid();
+	for (int i = 0; i < mat.GRID_SIZE; i++)
+		for (int j = 0; j < mat.GRID_SIZE; j++)
+			visited.grid[i][j] = 0;
+
+	list <pair<int, int>> queue;
+	pair <int, int> aux;
+
+	visited.grid[x1][y1] = 1;
+	aux.first = x1;
+	aux.second = y1;
+	queue.push_back(aux);
+
+	while (!queue.empty()) {
+		aux = queue.front();
+		mat.grid[aux.first][aux.second] = 6;
+		queue.pop_front();
+
+		x1 = aux.first;
+		y1 = aux.second;
+
+		for (int i = 0; i < 8; i++) {
+			int newx = x1 + dirx[i];
+			int newy = y1 + diry[i];
+			if (check_dir(newx, newy,mat)) {
+				if (visited.grid[newx][newy] == 0) {
+					visited.grid[newx][newy] = 1;
+					aux.first = newx;
+					aux.second = newy;
+					queue.push_back(aux);
+				}	
+			}
+		}
+	}
+}
+//-------------------------------------------------dfs-------------------------------------------------
+
+void dfs(int x1, int y1, int x2, int y2,Grid mat)
+{
+	for(int i=0; i < 8; i++)
+	{
+		int newx = x1+dirx[i];
+		int newy = y1+diry[i];
+		if(check_dir(newx, newy, mat))
+		{
+			//cout<<newx<<"   "<<newy<<endl;
+			mat.grid[newx][newy] = 6;
+			//print_matrix();
+			if(newx == x2 && newy == y2)
+			{
+                // mat.grid[x1,y1] = 4
+				mat.grid[newx][newy] = 4;
+				// print_matrix();
+			}
+			else
+				dfs(newx,newy, x2, y2,mat);
+		}
+	}
+	// mat.grid[x1][y1]=3;
 }

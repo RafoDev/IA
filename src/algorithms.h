@@ -31,3 +31,6 @@ void updateIndex(Queue &q, int position);
 
 bool aStar(Pair src, Pair dest, Grid myGrid);
 
+int check_dir(int x, int y, Grid mat);
+void bfs(int x1, int y1, int x2, int y2,Grid mat);
+void dfs(int x1, int y1, int x2, int y2,Grid mat);
